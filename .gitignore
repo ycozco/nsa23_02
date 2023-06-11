@@ -1,0 +1,62 @@
+# Ignorar archivos instaladores para Windows
+
+# Ignorar archivos MSI
+*.msi
+
+# Ignorar archivos EXE
+*.exe
+
+# Ignorar archivos de instalación de Microsoft Installer
+*.msix
+*.msixbundle
+
+# Ignorar archivos de instalación de Windows Installer
+*.msm
+
+# Ignorar archivos de instalación de Windows Script Component
+*.wsc
+
+# Ignorar archivos de instalación de Windows Script File
+*.wsf
+
+# Ignorar archivos de instalación de Windows Cabinet
+*.cab
+
+# Ignorar archivos de instalación de Inno Setup
+*.iss
+
+# Ignorar archivos de instalación de NSIS
+*.nsi
+*.nsis
+
+# Ignorar archivos de instalación de WiX Toolset
+*.wixobj
+*.wixpdb
+
+# Ignorar archivos de instalación de Nullsoft Scriptable Install System
+*.nsd
+*.nsh
+
+# Ignorar archivos de instalación de InstallShield
+*.ism
+*.ismproj
+*.ise
+*.ismst
+*.isn
+*.isproj
+*.issuite
+*.iswi
+*.isuite
+*.inst
+*.isp
+
+# Ignorar archivos de instalación de Advanced Installer
+*.aip
+
+# Ignorar archivos de instalación de Visual Studio Installer
+*.vdproj
+
+# Ignorar archivos de instalación de Windows Package Manager
+*.appx
+*.appxbundle
+*.msixupload
