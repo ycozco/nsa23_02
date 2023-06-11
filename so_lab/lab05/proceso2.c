@@ -52,6 +52,18 @@ int main() {
             break;
 
         default:
-           
+            printf("No ha elegido ninguna opcion válida\n");
+    }
+
+    if (lector == 1) {
+        if (msgctl(qid, IPC_RMID, NULL) == ERROR) {
+            perror("msgctl:");
+            exit(errno);
+        }
+        printf("Cola de mensajes eliminada\n");
+    }
+
+    exit(0);
+}
 
 // exec code : gcc proceso2.c -o proceso2
