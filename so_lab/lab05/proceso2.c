@@ -21,6 +21,7 @@ int main() {
     int qid;
     MENSAJE msg2;
     int lector = 0;
+    int opcion;
 
     qid = msgget(CLAVE_MSG, IPC_CREAT | IPC_EXCL | 0666);
 
@@ -51,17 +52,6 @@ int main() {
             break;
 
         default:
-            printf("No ha elegido ninguna opcion válida\n");
-    }
+           
 
-    if (lector == 1) {
-        if (msgctl(qid, IPC_RMID, NULL) == ERROR) {
-            perror("msgctl:");
-            exit(errno);
-        }
-        printf("Cola de mensajes eliminada\n");
-    }
-
-    exit(0);
-}
 // exec code : gcc proceso2.c -o proceso2

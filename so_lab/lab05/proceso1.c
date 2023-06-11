@@ -20,6 +20,7 @@ typedef struct {
 int main() {
     int qid;
     MENSAJE msg;
+    int opcion;
 
     qid = msgget(CLAVE_MSG, IPC_CREAT | IPC_EXCL | 0666);
 
@@ -56,4 +57,5 @@ int main() {
 
     exit(0);
 }
+
 // exec code : gcc proceso1.c -o proceso1
