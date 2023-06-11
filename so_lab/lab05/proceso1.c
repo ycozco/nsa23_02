@@ -51,8 +51,17 @@ int main() {
             printf("Mensaje enviado.\n");
             break;
 
+        case 2:
+            printf("Leyendo el primer mensaje de la cola...\n");
+            if (msgrcv(qid, &msg, sizeof(MENSAJE) - sizeof(long), TIPO, 0) == ERROR) {
+                perror("msgrcv:");
+                exit(errno);
+            }
+            printf("Mensaje recibido de tipo = %ld con info = %d\n", msg.tipo, msg.info);
+            break;
+
         default:
-            printf("No ha elegido ninguna opcion válida\n");
+            printf("No ha elegido ninguna opción válida\n");
     }
 
     exit(0);
