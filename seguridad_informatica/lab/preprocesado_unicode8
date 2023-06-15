@@ -1,0 +1,16 @@
+def preprocesar_unicode(archivo):
+    # Abrimos el archivo en modo lectura
+    with open(archivo, 'r') as f:
+        texto = f.read()
+
+    # Convertimos cada carácter a su número Unicode y lo almacenamos en una lista
+    unicode_texto = [str(ord(c)) for c in texto]
+
+    # Unimos los números Unicode en una cadena y la retornamos
+    return ' '.join(unicode_texto)
+
+# Usamos la función para preprocesar el archivo "POEMA_PRE.TXT"
+unicode_texto = preprocesar_unicode("POEMA_PRE.TXT")
+
+# Imprimimos el texto preprocesado
+print(unicode_texto)
