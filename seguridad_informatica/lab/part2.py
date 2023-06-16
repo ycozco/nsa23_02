@@ -14,16 +14,16 @@ def frecuencias(archivo):
     return frecuencias
 
 # Usamos la función para calcular las frecuencias en el archivo "POEMA_PRE.TXT"
-frecuencias = frecuencias("POEMA_PRE.TXT")
+list_frecuencia = frecuencias("POEMA_PRE.TXT")
 
 # Imprimimos las frecuencias
-for letra, frecuencia in frecuencias.items():
+for letra, frecuencia in list_frecuencia.items():
     print(f'{letra}: {frecuencia}')
 
 # Identificamos los cinco caracteres de mayor frecuencia
-top_5 = sorted(frecuencias.items(), key=lambda x: x[1], reverse=True)[:5]
+top_5 = sorted(list_frecuencia.items(), key=lambda x: x[1], reverse=True)[:5]
 
 # Imprimimos los cinco caracteres de mayor frecuencia
 print("\nLos cinco caracteres de mayor frecuencia son:")
-for letra, frecuencia in top_5:
-    print(f'{letra}: {frecuencia}')
+for letra, f_list_frecuencia in top_5:
+    print(f'{letra}: {f_list_frecuencia}')
