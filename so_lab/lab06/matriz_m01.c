@@ -27,7 +27,7 @@ void* matrizporescalar(void* arg) {
         printf("Hilo %d multiplicando fila %d\n", p->id, i);
         for (j = 0; j < 3; j++) {
             p->matriz[i][j] = p->matriz[i][j] * escalar; // Multiplica cada elemento por el escalar N
-            sleep(5);
+            sleep(1);
         }
     }
     return NULL;
