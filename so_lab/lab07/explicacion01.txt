@@ -1,0 +1,2 @@
+El planificador del sistema operativo es responsable de tomar decisiones sobre qué hilo debe ejecutarse en cada momento y durante cuánto tiempo. Utiliza algoritmos de planificación para determinar el orden de ejecución de los hilos basándose en políticas y prioridades.
+
