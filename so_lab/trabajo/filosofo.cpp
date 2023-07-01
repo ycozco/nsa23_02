@@ -73,5 +73,5 @@ int main() {
     return 0;
 }
 // how to exec filosofo.cpp on linux
-// gcc -pthread filosofo.c -o filosofoc
+// g++ -pthread filosofo.cpp -o filosofocpp
 // 
