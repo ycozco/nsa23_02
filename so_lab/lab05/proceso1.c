@@ -68,3 +68,4 @@ int main() {
 }
 
 // exec code : gcc proceso1.c -o proceso1
+
