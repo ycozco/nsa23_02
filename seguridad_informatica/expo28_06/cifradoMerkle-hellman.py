@@ -70,7 +70,7 @@ def extended_gcd(a, b):
     if a == 0:
         return b, 0, 1 # Si a es 0, el máximo común divisor es b, y los coeficientes de Bézout son 0 y 1
     else:
-        g, x, y = extended_gcd(b % a, a) # Calcula el máximo común divisor extendido de b módulo a y a
+        g, x, y = extended_gcd(b % a, a) # Calcula el máximo común divisor extendido de (b módulo a ) y a
         return g, y - (b // a) * x, x # Devuelve el máximo común divisor y los coeficientes de Bézout
 
 # Prueba del algoritmo

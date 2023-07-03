@@ -1,72 +1,48 @@
-#include <iostream>
-#include <thread>
-#include <semaphore.h>
+Semáforo cubierto[5];
+int i;
 
-#define NUM_FILOSOFOS 5
-#define IZQUIERDA(i) ((i + NUM_FILOSOFOS - 1) % NUM_FILOSOFOS)
-#define DERECHA(i) ((i + 1) % NUM_FILOSOFOS)
-
-sem_t cubierto[NUM_FILOSOFOS];
-sem_t inicioSemaforo;
-
-void meditar() {
-    // Lógica para meditar
-    // Aquí puedes implementar el código correspondiente a la meditación de los filósofos
-}
-
-void alimentarse(int id) {
-    std::cout << "Filósofo " << id << " está tratando de obtener los cubiertos." << std::endl;
-
-    // Solicitar los cubiertos
-    wait(&cubierto[IZQUIERDA(id)]);
-    wait(&cubierto[DERECHA(id)]);
-
-    std::cout << "Filósofo " << id << " tiene los cubiertos y está comiendo." << std::endl;
-
-    // Lógica para alimentarse
-    // Aquí puedes implementar el código correspondiente a la alimentación de los filósofos
-
-    // Liberar los cubiertos
-    signal(&cubierto[DERECHA(id)]);
-    signal(&cubierto[IZQUIERDA(id)]);
-}
-
-void filosofo(int id) {
-    while (true) {
+Filosofo(int i) {
+    while (forever) {
         meditar();
+        wait(cubierto[i]); // Usar cubierto izq
+        wait(cubierto[(i + 1) % 5]); // Usar cubierto derecho
 
-        wait(&inicioSemaforo);
+        alimentarse();
 
-        alimentarse(id);
-
-        signal(&inicioSemaforo);
+        signal(cubierto[(i + 1) % 5]); // Liberar cubierto derecho
+        signal(cubierto[i]); // Liberar cubierto izquierdo
     }
 }
 
-int main() {
-    std::thread filosofos[NUM_FILOSOFOS];
+main() {
+    for (int i = 0; i < 5; i++)
+        // Los semáforos inicializados en 1
+        initSemaforo(cubierto[i], 1);
 
-    // Inicializar los semáforos de los cubiertos
-    for (int i = 0; i < NUM_FILOSOFOS; i++) {
-        initSem(&cubierto[i], 1);
+    cobegin {
+        Filosofo(0); // Inicializar Filósofo 0
+        Filosofo(1); // Inicializar Filósofo 1
+        Filosofo(2); // Inicializar Filósofo 2
+        Filosofo(3); // Inicializar Filósofo 3
+        Filosofo(4); // Inicializar Filósofo 4
     }
-
-    // Inicializar el semáforo de inicio
-    initSem(&inicioSemaforo, 1);
-
-    // Crear los hilos de los filósofos
-    for (int i = 0; i < NUM_FILOSOFOS; i++) {
-        filosofos[i] = std::thread(filosofo, i);
-    }
-
-    // Esperar a que todos los hilos terminen
-    for (int i = 0; i < NUM_FILOSOFOS; i++) {
-        filosofos[i].join();
-    }
-
-    return 0;
 }
 
-// how to exec filosofo.cpp on linux
-// gcc -pthread filosofo.c -o filosofoc
-// 
+Semáforo cubierto[5];
+Semáforo control;
+int i;
+
+Filosofo(int i) {
+    while (forever) {
+        meditar();
+        wait(control); // Inicializar Filósofos -1
+        wait(cubierto[i]); // Usar cubierto izquierdo
+        wait(cubierto[(i + 1) % 5]); // Usar cubierto derecho
+
+        alimentarse();
+
+        signal(cubierto[(i + 1) % 5]); // Liberar cubierto derecho
+        signal(cubierto[i]); // Liberar cubierto izquierdo
+        signal(control);
+    }
+}
