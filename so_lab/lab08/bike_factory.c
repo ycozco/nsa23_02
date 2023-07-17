@@ -18,16 +18,10 @@ int manillares_count = 0;
 int bicicletas_count = 0;
 
 void *OP1(void *param) {
-    int item;
-
     while(ruedas_count < M) {
-        item = rand();
-        sem_wait(&empty);
-        sem_wait(&mutex);
-        buffer[count] = item;
+        // Produce ruedas
         ruedas_count += 2;
         printf("OP1 produjo dos ruedas\n");
-        sem_post(&mutex);
         sem_post(&sem_ruedas);
         sem_post(&sem_ruedas);
         usleep(200000);
@@ -35,32 +29,20 @@ void *OP1(void *param) {
 }
 
 void *OP2(void *param) {
-    int item;
-
     while(cuadros_count < N) {
-        item = rand();
-        sem_wait(&empty);
-        sem_wait(&mutex);
-        buffer[count] = item;
+        // Produce cuadros
         cuadros_count++;
         printf("OP2 produjo un cuadro\n");
-        sem_post(&mutex);
         sem_post(&sem_cuadros);
         usleep(200000);
     }
 }
 
 void *OP3(void *param) {
-    int item;
-
     while(manillares_count < N) {
-        item = rand();
-        sem_wait(&empty);
-        sem_wait(&mutex);
-        buffer[count] = item;
+        // Produce manillares
         manillares_count++;
         printf("OP3 produjo un manillar\n");
-        sem_post(&mutex);
         sem_post(&sem_manillares);
         usleep(200000);
     }
@@ -72,10 +54,8 @@ void *Montador(void *param) {
         sem_wait(&sem_ruedas);
         sem_wait(&sem_cuadros);
         sem_wait(&sem_manillares);
-        sem_wait(&mutex);
         printf("Montador ensambló una bicicleta\n");
         bicicletas_count++;
-        sem_post(&mutex);
         sem_post(&sem_bicicletas);
         usleep(200000);
     }
@@ -100,5 +80,6 @@ int main() {
 
     return 0;
 }
+
 // path: so_lab/lab08/bike_factory.c
 // how to exec: gcc bike_factory.c -o bike_factory -lpthread
