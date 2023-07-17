@@ -100,3 +100,5 @@ int main() {
 
     return 0;
 }
+// path: so_lab/lab08/bike_factory.c
+// how to exec: gcc bike_factory.c -o bike_factory -lpthread
