@@ -15,7 +15,7 @@
     };
 #endif
 
-// Declare the new functions
+// Declare declara nuevas funciones
 int create_semaphore(key_t key, int sem_flags);
 void unlock_semaphore(int semid, struct sembuf *sops);
 
@@ -44,7 +44,7 @@ int main() {
     }
 }
 
-// Function to create a semaphore
+// Funcion para crear un semaforo
 int create_semaphore(key_t key, int sem_flags) {
     int semid = semget(key, 10, sem_flags | IPC_CREAT);
     if (semid == -1) {
@@ -54,7 +54,7 @@ int create_semaphore(key_t key, int sem_flags) {
     return semid;
 }
 
-// Function to unlock a semaphore
+// Funcion para desbloquear un semaforo
 void unlock_semaphore(int semid, struct sembuf *sops) {
     sops->sem_op = 1;
     if (semop(semid, sops, 1) == -1) {
