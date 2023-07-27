@@ -18,7 +18,7 @@ int main() {
     srand(time(NULL));
 
     // abrir archivo para escritura
-    FILE *f = fopen("tiempos.txt", "a");
+    FILE *f = fopen("tiempos2.txt", "a"); // Cambiar "tiempos.txt" a "tiempos2.txt"
     if (f == NULL) {
         printf("Error al abrir el archivo de tiempos\n");
         return 1;
@@ -36,6 +36,11 @@ int main() {
         for (int i = 0; i < n; i++) {
             arr[i] = rand() % 1000;
         }
+
+        Rango rango;
+        rango.inicio = 0;
+        rango.fin = n - 1;
+        rango.array = arr;
 
         clock_t inicio, fin;
         double tiempo_usado;
@@ -69,6 +74,9 @@ int main() {
         // Calcular el tiempo usado y escribirlo en el archivo
         tiempo_usado = ((double)(fin - inicio)) / CLOCKS_PER_SEC;
         fprintf(f, "%d,%.4f\n", n, tiempo_usado);
+
+        // Vaciar el buffer de salida para asegurarnos de que los datos se escriban en el archivo
+        fflush(stdout);
     }
 
     // cerrar el archivo
@@ -76,6 +84,7 @@ int main() {
 
     return 0;
 }
+
 
 void *mergeSort(void* rango) {
     Rango* r = (Rango*)rango;
