@@ -1,4 +1,71 @@
+#include <pthread.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 
+#define MAX_SIZE 10000
+
+typedef struct {
+    int inicio;
+    int fin;
+    int* array;
+} Rango;
+
+void merge(int arr[], int l, int m, int r);
+void *mergeSort(void* rango);
+
+int main() {
+    srand(time(NULL));
+
+    // abrir archivo para escritura
+    FILE *f = fopen("tiempos.txt", "a");
+    if (f == NULL) {
+        printf("Error al abrir el archivo de tiempos\n");
+        return 1;
+    }
+
+    // Escribir el encabezado si el archivo está vacío
+    fseek(f, 0, SEEK_END);
+    if (ftell(f) == 0) {
+        fprintf(f, "tamaño,tiempo\n");
+    }
+
+    for (int n = 100; n <= MAX_SIZE; n += 400) {
+        int arr[n];
+        // inicializar el array con valores aleatorios
+        for(int i = 0; i < n; i++){
+            arr[i] = rand() % 1000; 
+        }
+
+        Rango rango;
+        rango.inicio = 0;
+        rango.fin = n - 1;
+        rango.array = arr;
+
+        pthread_t hilo;
+
+        clock_t inicio, fin;
+        double tiempo_usado;
+
+        // inicio = obtener el tiempo actual
+        inicio = clock();
+        
+        pthread_create(&hilo, NULL, mergeSort, &rango);
+        pthread_join(hilo, NULL);
+        
+        // fin = obtener el tiempo actual
+        fin = clock();
+
+        // Calcular el tiempo usado y escribirlo en el archivo
+        tiempo_usado = ((double) (fin - inicio)) / CLOCKS_PER_SEC;
+        fprintf(f, "%d,%.4f\n", n, tiempo_usado);
+    }
+
+    // cerrar el archivo
+    fclose(f);
+
+    return 0;
+}
 
 void *mergeSort(void* rango) {
     Rango* r = (Rango*) rango;
