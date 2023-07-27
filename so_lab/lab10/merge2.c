@@ -33,35 +33,32 @@ int main() {
     for (int n = 100; n <= MAX_SIZE; n += 400) {
         int arr[n];
         // inicializar el array con valores aleatorios
-        for(int i = 0; i < n; i++){
-            arr[i] = rand() % 1000; 
+        for (int i = 0; i < n; i++) {
+            arr[i] = rand() % 1000;
         }
-
-        Rango rango;
-        rango.inicio = 0;
-        rango.fin = n - 1;
-        rango.array = arr;
 
         clock_t inicio, fin;
         double tiempo_usado;
 
         // inicio = obtener el tiempo actual
         inicio = clock();
-        
-        // Crear 8 hilos para resolver los subproblemas
+
+        // Crear 4 hilos para resolver los subproblemas
         pthread_t hilos[4];
+        Rango rangos[4]; // Crear un arreglo de estructuras para cada hilo
         for (int i = 0; i < 4; i++) {
-            rango.inicio = i * (n / 4);
-            rango.fin = (i + 1) * (n / 4) - 1;
-            pthread_create(&hilos[i], NULL, mergeSort, &rango);
+            rangos[i].inicio = i * (n / 4);
+            rangos[i].fin = (i + 1) * (n / 4) - 1;
+            rangos[i].array = arr;
+            pthread_create(&hilos[i], NULL, mergeSort, &rangos[i]); // Pasar la estructura correspondiente al hilo
         }
 
         // Esperar a que todos los hilos terminen
         for (int i = 0; i < 4; i++) {
             pthread_join(hilos[i], NULL);
         }
-        
-        // Merge final de los 8 subarreglos
+
+        // Merge final de los 4 subarreglos
         for (int i = 1; i < 4; i++) {
             merge(arr, 0, i * (n / 4) - 1, (i + 1) * (n / 4) - 1);
         }
@@ -70,7 +67,7 @@ int main() {
         fin = clock();
 
         // Calcular el tiempo usado y escribirlo en el archivo
-        tiempo_usado = ((double) (fin - inicio)) / CLOCKS_PER_SEC;
+        tiempo_usado = ((double)(fin - inicio)) / CLOCKS_PER_SEC;
         fprintf(f, "%d,%.4f\n", n, tiempo_usado);
     }
 
@@ -80,10 +77,9 @@ int main() {
     return 0;
 }
 
-
 void *mergeSort(void* rango) {
-    Rango* r = (Rango*) rango;
-    int m = r->inicio+(r->fin-r->inicio)/2;
+    Rango* r = (Rango*)rango;
+    int m = r->inicio + (r->fin - r->inicio) / 2;
 
     if (r->inicio < r->fin) {
         Rango r1, r2;
@@ -146,9 +142,8 @@ void merge(int arr[], int l, int m, int r) {
         k++;
     }
 }
-// path so_lab/lab10/merge2.c
-// how to exec: gcc merge2.c -o merge -lpthread
+// path so_lab/lab10/merge.c
+// how to exec: gcc merge.c -o merge -lpthread
 // how i can view process in ubuntu? -> ps -e | grep merge
 // how i can view process and view details, like memory, cpu, etc?  and especific name as "code" -> ps -e -o pid,ppid,cmd,%mem,%cpu --sort=-%mem | grep merge
 // how to kill process named as code-insiders -> killall -9 code-insiders
-// how i can view my processor details as cores, threads, etc? -> lscpu
