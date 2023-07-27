@@ -49,21 +49,21 @@ int main() {
         inicio = clock();
         
         // Crear 8 hilos para resolver los subproblemas
-        pthread_t hilos[8];
-        for (int i = 0; i < 8; i++) {
-            rango.inicio = i * (n / 8);
-            rango.fin = (i + 1) * (n / 8) - 1;
+        pthread_t hilos[4];
+        for (int i = 0; i < 4; i++) {
+            rango.inicio = i * (n / 4);
+            rango.fin = (i + 1) * (n / 4) - 1;
             pthread_create(&hilos[i], NULL, mergeSort, &rango);
         }
 
         // Esperar a que todos los hilos terminen
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < 4; i++) {
             pthread_join(hilos[i], NULL);
         }
         
         // Merge final de los 8 subarreglos
-        for (int i = 1; i < 8; i++) {
-            merge(arr, 0, i * (n / 8) - 1, (i + 1) * (n / 8) - 1);
+        for (int i = 1; i < 4; i++) {
+            merge(arr, 0, i * (n / 4) - 1, (i + 1) * (n / 4) - 1);
         }
 
         // fin = obtener el tiempo actual
@@ -146,8 +146,9 @@ void merge(int arr[], int l, int m, int r) {
         k++;
     }
 }
-// path so_lab/lab10/merge.c
-// how to exec: gcc merge.c -o merge -lpthread
+// path so_lab/lab10/merge2.c
+// how to exec: gcc merge2.c -o merge -lpthread
 // how i can view process in ubuntu? -> ps -e | grep merge
 // how i can view process and view details, like memory, cpu, etc?  and especific name as "code" -> ps -e -o pid,ppid,cmd,%mem,%cpu --sort=-%mem | grep merge
 // how to kill process named as code-insiders -> killall -9 code-insiders
+// how i can view my processor details as cores, threads, etc? -> lscpu
